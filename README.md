@@ -17,20 +17,40 @@ A lightweight, non-blocking STM32 HAL driver for receiving CRSF RC channel data 
 
 ---
 
-## 📁 Directory Structure
+# What you need to start:
 
-```text
-crsf/
-├── CMakeLists.txt              # CMake build definition
-├── README.md                   # Documentation and usage guide
-├── Inc/
-│   └── crsf.h                  # CRSF structs, enums, and API prototypes
-├── Src/
-│   └── crsf.c                  # Core driver implementation
-└── examples/
-    └── rx_telemetry_example.c  # Example integration with STM32 HAL
-```
-
+1. In your vsCode or whatever, open terminal and type
+   ```
+   cd Drivers
+   git clone https://github.com/miszaklajent/stm32_crsf.git
+   ```
+2. Go to your `CMakeLists.txt` in the directory of your folder
+3. After 
+    ``` cmake
+    # Add STM32CubeMX generated sources
+    add_subdirectory(cmake/stm32cubemx)
+    ```
+    Add
+    ``` cmake
+    # Add CRSF driver library
+	add_subdirectory(Drivers/stm32_crsf)
+    ```
+4. Add `stm32_crsf` to `target_link_libraries(${CMAKE_PROJECT_NAME}`, it should look like this:
+   ```cmake
+    # Add linked libraries
+    target_link_libraries(${CMAKE_PROJECT_NAME}
+      stm32cubemx
+      stm32_crsf
+  
+     # Add user defined libraries
+    )
+   ```
+5. Add 
+    ```c
+    #include "crsf.h”
+    ```
+	to the beginning of the file where you want to use this library (`main.c` for example)
+6. Your code should be able to compile now.
 ---
 
 ## 🚀 Getting Started
